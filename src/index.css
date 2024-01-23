@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form {
+  width: 70%;
+  border-radius: 10px;
+  color: #000;
+}
+.form input {
+  background: none;
+  outline: none;
+  border: 1px solid #000;
+  border-radius: 10px;
+}
+.form input::placeholder {
+  color: rgba(0, 0, 0, 0.348);
+}
+.bgc {
+  background: linear-gradient(360deg, #eaeef7, #f8f3ee);
+}
+.borderRight {
+  border-right: 1px dotted #949292;
+}

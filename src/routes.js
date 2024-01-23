@@ -4,10 +4,11 @@ import {
   Routes,
   useLocation,
   useNavigate,
-} from 'react-router-dom';
-import { getItem } from './lib/storage';
-import Login from './pages/login';
-import Loading from './components/loading';
+} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getItem } from "./lib/storage";
+import Login from "./pages/login";
+import Loading from "./components/loading";
 
 function RouteManager({ children, auth = false, authRedirect }) {
   const [loading, setLoading] = useState(true);
@@ -15,11 +16,11 @@ function RouteManager({ children, auth = false, authRedirect }) {
   const location = useLocation();
 
   useEffect(() => {
-    const token = getItem('token');
+    const token = getItem("token");
     if (token && authRedirect) return router(authRedirect);
-    if (auth && !token) return router('/login');
+    if (auth && !token) return router("/login");
     setLoading(false);
-  }, [location.pathname]);
+  }, [auth, authRedirect, location.pathname, router]);
 
   return loading ? <Loading /> : children;
 }
@@ -28,7 +29,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<RouteManager authRedirect="/"><Login /></RouteManager>} />
+        <Route
+          path="/login"
+          element={
+            <RouteManager authRedirect="/">
+              <Login />
+            </RouteManager>
+          }
+        />
       </Routes>
     </Router>
   );
